@@ -1,5 +1,5 @@
 #!/bin/bash
-cd functions
-npm --prefix \"$RESOURCE_DIR\" run lint
-npm --prefix \"$RESOURCE_DIR\" run build
+cd "$RESOURCE_DIR"
+npm run lint
+npm run build
 cd ..

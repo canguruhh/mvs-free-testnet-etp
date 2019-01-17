@@ -37,9 +37,9 @@ export const height = functions.https.onRequest((req, res) => {
 export const history = functions.https.onRequest((req, res) => {
     db.collection('transfer').limit(HISTORY_COUNT).get()
         .then(snapshot => {
-            let result = []
+            const result = []
             snapshot.forEach(doc => {
-                let item = doc.data()
+                const item = doc.data()
                 result.push({
                     hash: item.hash,
                     address: item.address,
