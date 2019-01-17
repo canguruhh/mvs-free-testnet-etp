@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as requestify from 'requestify'
 import * as rq from 'request-promise'
+import { resolve } from 'url';
 
 const ENDPOINT = (functions.config().mvsd) ? functions.config().mvsd.endpoint : "https://testnet.mvs.org/rpc/v3"
 const RECAPTCHA_SECRET = (functions.config().recaptcha) ? functions.config().recaptcha.secret : ""
@@ -98,10 +99,13 @@ function _send(address, amount) {
         method: "send",
         params: [ACCOUNT_NAME, ACCOUNT_AUTH, address, amount]
     })
-        .then(response => JSON.parse(response.body).result)
-        .then(tx => {
-            if (tx.hash)
-                return tx
-            throw Error('Unable to send. Possible the wallet needs a recharge.')
+        .then()
+        .then(response => { 
+            const res = JSON.parse(response.body)
+            if (response.error)
+                throw Error(response.error.message)
+            if (res.result.hash)
+                return res.result
+            throw Error('Unable to send.')
         })
 }
