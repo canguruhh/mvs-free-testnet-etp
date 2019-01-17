@@ -102,8 +102,8 @@ function _send(address, amount) {
         .then()
         .then(response => { 
             const res = JSON.parse(response.body)
-            if (response.error)
-                throw Error(response.error.message)
+            if (res.error)
+                throw Error(res.error.message)
             if (res.result.hash)
                 return res.result
             throw Error('Unable to send.')
