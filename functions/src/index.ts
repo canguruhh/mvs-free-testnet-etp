@@ -40,7 +40,7 @@ export const balance = functions.https.onRequest((req, res) => {
         method: "getbalance",
         params: [ACCOUNT_NAME, ACCOUNT_AUTH]
     })
-    .then(response=>JSON.parse(response.body))
+        .then(response => JSON.parse(response.body))
         .then(response => {
             if (response.error)
                 throw Error(response.error.message)
@@ -99,8 +99,8 @@ function _send(address, amount) {
         method: "send",
         params: [ACCOUNT_NAME, ACCOUNT_AUTH, address, amount]
     })
-        .then(response=>JSON.parse(response.body))
-        .then(response => { 
+        .then(response => JSON.parse(response.body))
+        .then(response => {
             if (response.error)
                 throw Error(response.error.message)
             if (response.result.hash)
