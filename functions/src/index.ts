@@ -75,12 +75,13 @@ export const send = functions.https.onRequest((req, res) => {
         .then(() => _send(address, ETP_AMOUNT))
         .then(tx => {
             res.status(200).json(tx)
-            db.collection("transfer").doc().set({
-                address, tx, date: new Date(), hash: tx.hash
-            })
-            db.collection("user").doc().set({
-                email, address, date: new Date()
-            })
+            return Promise.all([
+                db.collection("transfer").doc().set({
+                    address, tx, date: new Date(), hash: tx.hash
+                }),
+                db.collection("user").doc().set({
+                    email, address, date: new Date()
+                })])
         })
         .catch(reason => {
             console.log(reason.message)
