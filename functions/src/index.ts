@@ -27,7 +27,7 @@ export const height = functions.https.onRequest((req, res) => {
         .then(response => {
             const result = JSON.parse(response.body).result
             res.set('Cache-Control', 'public, max-age=30, s-maxage=30');
-            res.json(result)
+            res.json({height: result})
         })
         .catch(error => {
             res.status(400).json({ message: error.message })
