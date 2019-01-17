@@ -27,7 +27,7 @@ export const height = functions.https.onRequest((req, res) => {
         .then(response => {
             const result = JSON.parse(response.body).result
             res.set('Cache-Control', 'public, max-age=30, s-maxage=30');
-            res.json({height: result})
+            res.json({ height: result })
         })
         .catch(error => {
             res.status(400).json({ message: error.message })
@@ -94,10 +94,15 @@ export const send = functions.https.onRequest((req, res) => {
                 })
         })
         .then(() => _send(address, ETP_AMOUNT))
-        .then(tx => db.collection("transfer").doc().set({
-            email, address, tx, date: new Date(), hash: tx.hash
-        }).then(() => res.status(200).json(tx))
-        )
+        .then(tx => {
+            res.status(200).json(tx)
+            db.collection("transfer").doc().set({
+                email, address, tx, date: new Date(), hash: tx.hash
+            })
+            db.collection("user").doc().set({
+                email, address, date: new Date()
+            })
+        })
         .catch(reason => {
             console.log(reason.message)
             res.status(400).send(reason.message)
