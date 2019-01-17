@@ -77,7 +77,7 @@ export const send = functions.https.onRequest((req, res) => {
             res.status(200).json(tx)
             return Promise.all([
                 db.collection("transfer").doc().set({
-                    address, tx, date: new Date(), hash: tx.hash
+                    address, tx, date: new Date(), hash: tx.hash, amount: ETP_AMOUNT
                 }),
                 db.collection("user").doc().set({
                     email, address, date: new Date()
@@ -100,9 +100,5 @@ function _send(address, amount) {
             if (tx.hash)
                 return tx
             throw Error('Unable to send. Possible the wallet needs a recharge.')
-        })
-        .catch(error => {
-            console.error('error sending etp:', error)
-            throw Error('error sending etp')
         })
 }
