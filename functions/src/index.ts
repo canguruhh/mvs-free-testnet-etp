@@ -97,7 +97,7 @@ export const send = functions.https.onRequest((req, res) => {
         .then(tx => {
             res.status(200).json(tx)
             db.collection("transfer").doc().set({
-                email, address, tx, date: new Date(), hash: tx.hash
+                address, tx, date: new Date(), hash: tx.hash
             })
             db.collection("user").doc().set({
                 email, address, date: new Date()
