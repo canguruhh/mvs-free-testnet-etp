@@ -8,7 +8,6 @@ const RECAPTCHA_SECRET = (functions.config().recaptcha) ? functions.config().rec
 const ACCOUNT_NAME = (functions.config().mvsd) ? functions.config().mvsd.account : "user"
 const ACCOUNT_AUTH = (functions.config().mvsd) ? functions.config().mvsd.password : "password"
 const ETP_AMOUNT = (functions.config().settings) ? parseInt(functions.config().settings.amount) : 10000
-const HISTORY_COUNT = (functions.config().settings) ? parseInt(functions.config().settings.history) : 25
 
 admin.initializeApp(functions.config().firebase);
 
