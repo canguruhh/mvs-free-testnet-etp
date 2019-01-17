@@ -21,8 +21,8 @@
   <br><br>
 <div *ngIf="balance">Available ETP: {{balance.available / 10E8}}</div>
 <h2>History</h2>
-<ul *ngIf="history && history.length">
-  <li *ngFor="let item of history">
-    <b>{{item.date | date : 'medium'}}</b> Tx: <a href="https://explorer-testnet.mvs.org/tx/{{item.hash}}">{{item.hash}}</a> - Address: {{item.address}}
+<ul>
+  <li *ngFor="let item of history | async">
+    <b>{{item.date | date: 'medium'}}</b> Tx: <a href="https://explorer-testnet.mvs.org/tx/{{item.hash}}">{{item.hash}}</a> - Address: {{item.address}}
   </li>
 </ul>

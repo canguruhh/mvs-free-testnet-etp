@@ -4,9 +4,11 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import { AngularFireModule } from '@angular/fire';
+import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { AppComponent } from './app.component';
     RecaptchaFormsModule,
     FormsModule,
     ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

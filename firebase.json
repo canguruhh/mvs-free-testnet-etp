@@ -16,10 +16,6 @@
     ],
     "rewrites": [
       {
-        "source": "/api/history",
-        "function": "history"
-      },
-      {
         "source": "/api/send",
         "function": "send"
       },

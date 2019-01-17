@@ -34,26 +34,6 @@ export const height = functions.https.onRequest((req, res) => {
         })
 })
 
-export const history = functions.https.onRequest((req, res) => {
-    db.collection('transfer').limit(HISTORY_COUNT).get()
-        .then(snapshot => {
-            const result = []
-            snapshot.forEach(doc => {
-                const item = doc.data()
-                result.push({
-                    hash: item.hash,
-                    address: item.address,
-                    date: item.date.toDate()
-                })
-            })
-            res.set('Cache-Control', 'public, max-age=60, s-maxage=60');
-            res.status(200).json(result)
-        })
-        .catch(error => {
-            res.status(400).json({ message: error.message })
-        })
-})
-
 export const balance = functions.https.onRequest((req, res) => {
     requestify.post(ENDPOINT, {
         jsonrpc: "3.0",
