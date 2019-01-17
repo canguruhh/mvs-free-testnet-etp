@@ -34,7 +34,7 @@ export class AppComponent {
   address = new FormControl('')
   constructor(private http: HttpClient, afs: AngularFirestore) {
     afs.firestore.settings({ timestampsInSnapshots: false });
-    this.transferCollection = afs.collection<HistoryItem>('transfer');
+    this.transferCollection = afs.collection<HistoryItem>('transfer', ref => ref.orderBy('date', 'desc'));
     this.history = this.transferCollection.valueChanges()
   }
 
