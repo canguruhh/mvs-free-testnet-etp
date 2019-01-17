@@ -1,0 +1,29 @@
+sudo: required
+addons:
+  addons: 
+  chrome: stable
+  apt:
+    packages:
+    - chromium-chromedriver
+language: node_js
+node_js:
+- 10
+cache:
+  directories:
+  - node_modules
+before_script:
+- export DISPLAY=:99.0
+- export PATH=$PATH:/usr/lib/chromium-browser/
+- "./node_modules/ionic/bin/ionic serve --no-open &"
+- sleep 30
+install:
+- npm i
+deploy:
+- provider: firebase
+  token:
+    secure: CugMrIvp10jnzhCJeCqYZGaMxVUkn/+PlAyYqr5/+n3M3/CYiJFHJaC7CWkMk7ljfKRTCmAG/IiUVeSXgVSpcMZlakDP9rhZTUx9i7W+bxFS3cshSEeKQnrqKK+0yygtmE/w5jno2/ML83aXBP/oiN37X0OBEofOXraKsW55JXDCmi/ve0BY9ZzZg89ml3QEfVlMw4loldiaehs1Xqmd+mpJN01pduPYgCdUmvm2uxCZYhr7h7IybwSD22d3cBsXQvd4HwJKrcwJo1N11M8T0Pb6DxdmoJEHKqNTF8KWCmex4OOmojgDGGsF/YOLEX3Z6SBKXTBwkqrnrgisD+dJIGDa4M0sJK9kD4GZA5Rko8/59bRteGPz+E/Tn1RMZaGQCeslFi2yFQxZXQDG3FFuPSVGotvWxn4/7BpnKG6epA/YOTMuFSmuV67Z/+OK8Xt4LA7/VRBQzRVJaCuhJvFGu5DF8WUK6AiLPv0WaZq5+DLO+YRlhiuFHK4PtgC0iy6/G/mtLHbuVJFEDZYG6UY3CXmkqcLRSGgsbNaGA1aG4lSigZb8e7MaIp6+mybF0qDtbGIAFtFgmTdMLylesMsdthAr9aNN5+ov5G3K9D60TyY70N2wgnf2tRmaQQIwTwS0T0+XNW7wlwvpDH4QLE5LpBEdjnnKLeNq4cnPewBKiq8=
+  edge: true
+  project: mvs-free
+  skip_cleanup: true
+  on:
+    branch: master
