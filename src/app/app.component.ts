@@ -26,13 +26,13 @@ interface Balance {
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
+
   applyForm: FormGroup
   message: string
   balance: Balance
   transferCollection: AngularFirestoreCollection<HistoryItem>;
   history: Observable<HistoryItem[]>;
 
-  address = new FormControl('')
   constructor(private http: HttpClient, afs: AngularFirestore) {
     afs.firestore.settings({ timestampsInSnapshots: false });
     this.transferCollection = afs.collection<HistoryItem>('transfer', ref => ref.orderBy('date', 'desc'));
@@ -40,7 +40,6 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    // this.loadHistory()
     this.loadBalance()
     this.applyForm = new FormGroup({
       captcha: new FormControl(null, [
@@ -65,14 +64,6 @@ export class AppComponent {
     })
   }
 
-  // loadHistory(){
-  //   this.http.get('/api/history').subscribe((res:HistoryItem[]) => {
-  //     this.history = res
-  //   }, error => {
-  //     console.error(error)
-  //   })
-  // }
-
   onSubmit() {
     this.http.post('/api/send', this.applyForm.value).subscribe((res:SendResponse) => {
       this.message = `We send you some testnet ETP with transaction ${res.hash}. Go change the world!`
@@ -82,6 +73,4 @@ export class AppComponent {
       this.message = res.error
     })
   }
-
-
 }

@@ -1,24 +1,29 @@
-<div style="text-align:center">
+<div class="header">
   <img width="500" alt="Metavserse Logo" src="/assets/logo.png">
   <h1>Free Testnet ETP</h1>
 </div>
 <p>Enter your testnet address and receive ETP for your tests: </p>
 <mat-card class="container">
   <form [formGroup]="applyForm" (ngSubmit)="onSubmit()">
-      <mat-form-field class="example-full-width">
-        <input matInput formControlName="email" placeholder="Email" value="">
-      </mat-form-field>
-      <br>
-      <mat-form-field class="example-full-width">
-        <input matInput formControlName="address" placeholder="Metavserse Address" value="">
-      </mat-form-field>
-      <br>
-      <re-captcha [hidden]="applyForm.controls.address.invalid || applyForm.controls.email.invalid" siteKey="6Lf-cIoUAAAAADab1Xs9wKFySYRVNqSUXXE4AFpU"
-        formControlName="captcha"></re-captcha>
-      <br>
-      <button [disabled]="applyForm.invalid" mat-raised-button color="primary">Submit</button>
-
-      <p *ngIf="message">{{message}}</p>
+    <mat-form-field class="example-full-width">
+      <input matInput formControlName="email" placeholder="Email" value="">
+    </mat-form-field>
+    <mat-error *ngIf="applyForm.controls.email.hasError('email')">
+      Please enter a valid email address
+    </mat-error>
+    <br>
+    <mat-form-field class="example-full-width">
+      <input matInput formControlName="address" placeholder="Metavserse Address" value="">
+    </mat-form-field>
+    <mat-error *ngIf="applyForm.controls.address.hasError('pattern')">
+      Please enter a valid testnet address (starts with t)
+    </mat-error>
+    <br>
+    <re-captcha [hidden]="applyForm.controls.address.invalid || applyForm.controls.email.invalid" siteKey="6Lf-cIoUAAAAADab1Xs9wKFySYRVNqSUXXE4AFpU"
+      formControlName="captcha"></re-captcha>
+    <br>
+    <button [disabled]="applyForm.invalid" mat-raised-button color="primary">Submit</button>
+    <p *ngIf="message">{{message}}</p>
   </form>
 </mat-card>
 <p>Please return the ETP to tXXX if you dont need them anymore. Thank you.</p>
