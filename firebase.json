@@ -1,0 +1,40 @@
+{
+  "functions": {
+    "predeploy": [
+      "sh functions/build.sh"
+    ]
+  },
+  "hosting": {
+    "predeploy": [
+        "npm run build"
+    ],
+    "public": "dist/frontend",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/history",
+        "function": "history"
+      },
+      {
+        "source": "/api/send",
+        "function": "send"
+      },
+      {
+        "source": "/api/balance",
+        "function": "balance"
+      },
+      {
+        "source": "/api/height",
+        "function": "height"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

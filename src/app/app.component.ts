@@ -1,4 +1,21 @@
 import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { sendRequest } from 'selenium-webdriver/http';
+
+interface SendResponse {
+  hash: string
+}
+
+interface HistoryItem {
+  hash: string
+  address: string
+  date: Date
+}
+
+interface Balance {
+  available: number
+}
 
 @Component({
   selector: 'app-root',
@@ -6,5 +23,56 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.sass']
 })
 export class AppComponent {
-  title = 'frontend';
+  applyForm: FormGroup
+  message: string
+  balance: Balance
+  history: HistoryItem[] = []
+  address = new FormControl('')
+  constructor(private http: HttpClient) { }
+
+  ngOnInit() {
+    this.loadHistory()
+    this.loadBalance()
+    this.applyForm = new FormGroup({
+      captcha: new FormControl(null, [
+        Validators.required
+      ]),
+      email: new FormControl(null, [
+        Validators.required,
+        Validators.email
+      ]),
+      address: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/^t[A-Za-z0-9]{33}$/)
+      ]),
+    });
+  }
+
+  loadBalance(){
+    this.http.get('/api/balance').subscribe((res:Balance) => {
+      this.balance = res
+    }, error => {
+      console.error(error)
+    })
+  }
+
+  loadHistory(){
+    this.http.get('/api/history').subscribe((res:HistoryItem[]) => {
+      this.history = res
+    }, error => {
+      console.error(error)
+    })
+  }
+
+  onSubmit() {
+    this.http.post('/api/send', this.applyForm.value).subscribe((res:SendResponse) => {
+      this.message = `We send you some testnet ETP with transaction ${res.hash}. Go change the world!`
+      console.log(res)
+    }, res => {
+      console.error(res)
+      this.message = res.error
+    })
+  }
+
+
 }

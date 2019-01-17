@@ -1,20 +1,28 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
-    Welcome to {{ title }}!
+    Free Testnet ETP
   </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+  <img width="300" alt="Angular Logo" src="/assets/logo.png">
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
+<h2>Enter your testnet address and receive ETP for your tests: </h2>
+<form [formGroup]="applyForm" (ngSubmit)="onSubmit()">
+  <label>Email:
+    <input type="text" formControlName="email">
+  </label>
+  <label>Address:
+    <input type="text" formControlName="address">
+  </label>
+  <br><br>
+  <re-captcha [hidden]="applyForm.controls.address.invalid || applyForm.controls.email.invalid" siteKey="6Lf-cIoUAAAAADab1Xs9wKFySYRVNqSUXXE4AFpU" formControlName="captcha"></re-captcha>
+  <br>
+  <button [disabled]="applyForm.invalid">Submit</button>
+  <div *ngIf="message">{{message}}</div>
+</form>
+  <br><br>
+<div *ngIf="balance">Available ETP: {{balance.available / 10E8}}</div>
+<h2>History</h2>
+<ul *ngIf="history && history.length">
+  <li *ngFor="let item of history">
+    <b>{{item.date | date : 'medium'}}</b> Tx: <a href="https://explorer-testnet.mvs.org/tx/{{item.hash}}">{{item.hash}}</a> - Address: {{item.address}}
   </li>
 </ul>
-
