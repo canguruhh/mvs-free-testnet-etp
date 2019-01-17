@@ -40,7 +40,10 @@ export const balance = functions.https.onRequest((req, res) => {
         params: [ACCOUNT_NAME, ACCOUNT_AUTH]
     })
         .then(response => {
-            const result = JSON.parse(response.body).result
+            const res = JSON.parse(response.body)
+            if (response.error)
+                throw Error(response.error.message)
+            const result = res.result
             res.set('Cache-Control', 'public, max-age=30, s-maxage=30');
             res.json({ available: result.total_available - result.total_frozen })
         })
