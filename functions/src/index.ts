@@ -40,11 +40,11 @@ export const balance = functions.https.onRequest((req, res) => {
         method: "getbalance",
         params: [ACCOUNT_NAME, ACCOUNT_AUTH]
     })
+    .then(response=>JSON.parse(response))
         .then(response => {
-            const res = JSON.parse(response.body)
             if (response.error)
                 throw Error(response.error.message)
-            const result = res.result
+            const result = response.result
             res.set('Cache-Control', 'public, max-age=30, s-maxage=30');
             res.json({ available: result.total_available - result.total_frozen })
         })
@@ -99,13 +99,12 @@ function _send(address, amount) {
         method: "send",
         params: [ACCOUNT_NAME, ACCOUNT_AUTH, address, amount]
     })
-        .then()
+        .then(response=>JSON.parse(response.body))
         .then(response => { 
-            const res = JSON.parse(response.body)
-            if (res.error)
-                throw Error(res.error.message)
-            if (res.result.hash)
-                return res.result
+            if (response.error)
+                throw Error(response.error.message)
+            if (response.result.hash)
+                return response.result
             throw Error('Unable to send.')
         })
 }
