@@ -38,7 +38,7 @@
   </form>
 </mat-card>
 <p>Please return the ETP to {{myAddress}} if you dont need them anymore. Thank you.</p>
-<div *ngIf="balance">Available ETP: {{balance.available / 10E8}}</div>
+<p *ngIf="balance">Available ETP: {{balance.available / 10E8}}</p>
 <h2>History</h2>
 <ul>
   <li *ngFor="let item of history | async">
