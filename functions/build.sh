@@ -1,5 +1,5 @@
 #!/bin/bash
-pushd functions
+cd functions
 npm --prefix \"$RESOURCE_DIR\" run lint
 npm --prefix \"$RESOURCE_DIR\" run build
-popd
+cd ..
