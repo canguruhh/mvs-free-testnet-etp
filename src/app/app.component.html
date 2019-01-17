@@ -19,26 +19,23 @@
       Please enter a valid testnet address (starts with t)
     </mat-error>
     <br>
-    <re-captcha [hidden]="applyForm.controls.address.invalid || applyForm.controls.email.invalid" siteKey="6Lf-cIoUAAAAADab1Xs9wKFySYRVNqSUXXE4AFpU"
-      formControlName="captcha"></re-captcha>
+    <div [hidden]="applyForm.controls.address.invalid || applyForm.controls.email.invalid">
+      <p>For bot prevention we need to verify that you are a humen. If the plugin does not load load please check your network connection.</p>
+      <re-captcha siteKey="6Lf-cIoUAAAAADab1Xs9wKFySYRVNqSUXXE4AFpU" formControlName="captcha"></re-captcha>
+    </div>
     <br>
     <button [disabled]="applyForm.invalid" *ngIf="!loading" mat-raised-button color="primary">
       Submit
     </button>
-    <mat-progress-spinner
-        *ngIf="loading"
-        style="margin:0 auto; margin-top: 12px;"
-        color="primary"
-        diameter="30"
-        strokeWidth="10"
-        aria-label="submitloader"
-        mode="indeterminate">
-      </mat-progress-spinner>
+    <mat-progress-spinner *ngIf="loading" style="margin:0 auto; margin-top: 12px;" color="primary" diameter="30"
+      strokeWidth="10" aria-label="submitloader" mode="indeterminate">
+    </mat-progress-spinner>
     <p *ngIf="message">{{message}}</p>
   </form>
 </mat-card>
 <p>Please return the ETP to {{myAddress}} if you dont need them anymore. Thank you.</p>
-<p>For information on how to use the testnet see <a href="https://docs.mvs.org/docs/testnet.html">docs.mvs.org</a> or <a href="https://medium.com/@canguruhh/how-to-use-the-metaverse-testnet-b8a194e6670d">this</a> Medium article.</p>
+<p>For information on how to use the testnet see <a href="https://docs.mvs.org/docs/testnet.html">docs.mvs.org</a> or
+  <a href="https://medium.com/@canguruhh/how-to-use-the-metaverse-testnet-b8a194e6670d">this</a> Medium article.</p>
 <p *ngIf="balance">Available ETP: {{balance.available / 10E8}}</p>
 <h2>History</h2>
 <ul>
