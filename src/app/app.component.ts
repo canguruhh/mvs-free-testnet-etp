@@ -66,13 +66,17 @@ export class AppComponent {
     })
   }
 
+  reset(){
+      this.applyForm.reset()
+  }
+
   onSubmit() {
     this.loading=true
     this.http.post('/api/send', this.applyForm.value).subscribe((res:SendResponse) => {
       this.message = `We send you some testnet ETP with transaction ${res.hash}. Go change the world!`
       console.log(res)
       this.loading=false
-      this.applyForm.reset()
+      this.reset()
     }, res => {
       console.error(res)
       this.message = res.error

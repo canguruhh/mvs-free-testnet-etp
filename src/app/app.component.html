@@ -1,5 +1,5 @@
 <div class="header">
-  <img width="500" alt="Metavserse Logo" src="/assets/logo.png">
+  <img class="logo" alt="Metavserse Logo" src="/assets/logo.png">
   <h1>Free Testnet ETP</h1>
 </div>
 <p>Enter your testnet address and receive ETP for your tests: </p>
@@ -26,6 +26,9 @@
     <br>
     <button [disabled]="applyForm.invalid" *ngIf="!loading" mat-raised-button color="primary">
       Submit
+    </button>
+    <button type="button" *ngIf="!loading" mat-button (click)="reset($event)" color="warn">
+      Cancel
     </button>
     <mat-progress-spinner *ngIf="loading" style="margin:0 auto; margin-top: 12px;" color="primary" diameter="30"
       strokeWidth="10" aria-label="submitloader" mode="indeterminate">
