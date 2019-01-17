@@ -30,17 +30,17 @@
     <mat-progress-spinner *ngIf="loading" style="margin:0 auto; margin-top: 12px;" color="primary" diameter="30"
       strokeWidth="10" aria-label="submitloader" mode="indeterminate">
     </mat-progress-spinner>
-    <p *ngIf="message">{{message}}</p>
+    <p *ngIf="message break-all">{{message}}</p>
   </form>
 </mat-card>
-<p>Please return the ETP to {{myAddress}} if you dont need them anymore. Thank you.</p>
+<p>Please return the ETP to <span class="break-all">{{myAddress}}</span> if you dont need them anymore. Thank you.</p>
 <p>For information on how to use the testnet see <a href="https://docs.mvs.org/docs/testnet.html">docs.mvs.org</a> or
   <a href="https://medium.com/@canguruhh/how-to-use-the-metaverse-testnet-b8a194e6670d">this</a> Medium article.</p>
 <p *ngIf="balance">Available ETP: {{balance.available / 10E8}}</p>
 <h2>History</h2>
 <ul>
   <li *ngFor="let item of history | async">
-    <b>{{item.date | date: 'medium'}}</b> Tx: <a href="https://explorer-testnet.mvs.org/tx/{{item.hash}}">{{item.hash}}</a>
-    - Address: {{item.address}}
+    <b>{{item.date | date: 'medium'}}</b> Tx: <a class="break-all" href="https://explorer-testnet.mvs.org/tx/{{item.hash}}">{{item.hash}}</a>
+    - Address: <span class="break-all">{{item.address}}</span>
   </li>
 </ul>
