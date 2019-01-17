@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Observable } from 'rxjs'
+import {environment} from '../environments/environment';
 
 
 interface SendResponse {
@@ -30,6 +30,8 @@ export class AppComponent {
   applyForm: FormGroup
   message: string
   balance: Balance
+  loading: boolean
+  myAddress: string = environment.address
   transferCollection: AngularFirestoreCollection<HistoryItem>;
   history: Observable<HistoryItem[]>;
 
@@ -65,12 +67,16 @@ export class AppComponent {
   }
 
   onSubmit() {
+    this.loading=true
     this.http.post('/api/send', this.applyForm.value).subscribe((res:SendResponse) => {
       this.message = `We send you some testnet ETP with transaction ${res.hash}. Go change the world!`
       console.log(res)
+      this.loading=false
+      this.applyForm.reset()
     }, res => {
       console.error(res)
       this.message = res.error
+      this.loading=false
     })
   }
 }

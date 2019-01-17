@@ -10,7 +10,7 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule, MatInputModule, MatCardModule} from '@angular/material';
+import {MatButtonModule, MatInputModule, MatCardModule, MatProgressSpinnerModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -29,6 +29,7 @@ import {MatButtonModule, MatInputModule, MatCardModule} from '@angular/material'
     MatButtonModule,
     MatInputModule,
     MatCardModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

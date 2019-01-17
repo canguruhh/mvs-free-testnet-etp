@@ -3,5 +3,6 @@ export const environment = {
   firebase: {
     databaseURL: 'mvs-free',
     projectId: 'mvs-free',
-  }
+  },
+  address: "tLhKaek9gxAauzquSFiJeZRoHLMVjkVmq6"
 };
