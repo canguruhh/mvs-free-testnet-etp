@@ -33,7 +33,7 @@
     <mat-progress-spinner *ngIf="loading" style="margin:0 auto; margin-top: 12px;" color="primary" diameter="30"
       strokeWidth="10" aria-label="submitloader" mode="indeterminate">
     </mat-progress-spinner>
-    <p *ngIf="message break-all">{{message}}</p>
+    <p *ngIf="message" class="break-all">{{message}}</p>
   </form>
 </mat-card>
 <p>Please return the ETP to <span class="break-all">{{myAddress}}</span> if you dont need them anymore. Thank you.</p>

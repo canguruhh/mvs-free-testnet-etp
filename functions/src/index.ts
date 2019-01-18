@@ -2,13 +2,20 @@ import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as requestify from 'requestify'
 import * as rq from 'request-promise'
-import { resolve } from 'url';
+import * as sgMail from '@sendgrid/mail'
+import { MailData } from '@sendgrid/helpers/classes/mail';
+
 
 const ENDPOINT = (functions.config().mvsd) ? functions.config().mvsd.endpoint : "https://testnet.mvs.org/rpc/v3"
 const RECAPTCHA_SECRET = (functions.config().recaptcha) ? functions.config().recaptcha.secret : ""
 const ACCOUNT_NAME = (functions.config().mvsd) ? functions.config().mvsd.account : "user"
 const ACCOUNT_AUTH = (functions.config().mvsd) ? functions.config().mvsd.password : "password"
 const ETP_AMOUNT = (functions.config().settings) ? parseInt(functions.config().settings.amount) : 10000
+const SENDGRID = {
+    api: (functions.config().sendgrid) ? functions.config().sendgrid.api : "",
+    template: (functions.config().sendgrid) ? functions.config().sendgrid.template : "",
+    asm: (functions.config().sendgrid) ? functions.config().sendgrid.asm : "", //Unsubscibe list
+}
 
 admin.initializeApp(functions.config().firebase);
 
@@ -56,7 +63,7 @@ export const balance = functions.https.onRequest((req, res) => {
 export const send = functions.https.onRequest((req, res) => {
     const captcha = req.body.captcha
     const address = req.body.address
-    const email = req.body.email
+    const email: string = req.body.email
 
     console.log("check recaptcha response", captcha)
     rq.post({
@@ -85,11 +92,35 @@ export const send = functions.https.onRequest((req, res) => {
                 }),
                 db.collection("user").doc().set({
                     email, address, date: new Date()
-                })])
+                })
+            ])
+        })
+        .then(() => {
+            console.info("send mail", SENDGRID.api, SENDGRID.template, SENDGRID.asm)
+            sgMail.setApiKey(SENDGRID.api);
+            const msg: MailData = {
+                from: 'info@mvs.org',
+                templateId: SENDGRID.template,
+                personalizations: [
+                    {
+                        to: email,
+                        substitutions:{
+                            address: address
+                        }
+
+                    }
+                ],
+                asm: {
+                    groupId: parseInt(SENDGRID.asm)
+                }
+            }
+            console.info(msg)
+            return sgMail.send(msg)
         })
         .catch(reason => {
-            console.log(reason.message)
-            res.status(400).send(reason.message)
+            console.log(JSON.stringify(reason))
+            if (!res.headersSent)
+                res.status(400).send(reason.message)
         })
 })
 
