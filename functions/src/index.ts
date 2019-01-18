@@ -103,8 +103,9 @@ function _send(address, amount) {
         .then(response => {
             if (response.error)
                 throw Error(response.error.message)
+            console.log(response)
             if (response.result.hash)
-                return response.resultresol
+                return response.result
             throw Error('Unable to send.')
         })
 }

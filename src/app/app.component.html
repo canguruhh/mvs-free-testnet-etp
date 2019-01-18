@@ -39,7 +39,7 @@
 <p>Please return the ETP to <span class="break-all">{{myAddress}}</span> if you dont need them anymore. Thank you.</p>
 <p>For information on how to use the testnet see <a href="https://docs.mvs.org/docs/testnet.html">docs.mvs.org</a> or
   <a href="https://medium.com/@canguruhh/how-to-use-the-metaverse-testnet-b8a194e6670d">this</a> Medium article.</p>
-<p *ngIf="balance">Available ETP: {{balance.available / 10E8}}</p>
+<p *ngIf="balance">Available ETP: {{balance.available / 1E8}}</p>
 <h2>History</h2>
 <ul>
   <li *ngFor="let item of history | async">
