@@ -1,0 +1,33 @@
+<mat-card class="container">
+    <p>Enter your testnet address and receive ETP for your tests: </p>
+    <form [formGroup]="applyForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="example-full-width">
+            <input matInput formControlName="email" placeholder="Email" value="">
+        </mat-form-field>
+        <mat-error *ngIf="applyForm.controls.email.hasError('email')">
+            Please enter a valid email address
+        </mat-error>
+        <br>
+        <mat-form-field class="example-full-width">
+            <input matInput formControlName="address" placeholder="Testnet Address" value="">
+        </mat-form-field>
+        <mat-error *ngIf="applyForm.controls.address.hasError('pattern')">
+            Please enter a valid testnet address (starts with t)
+        </mat-error>
+        <br>
+        <div [hidden]="applyForm.controls.address.invalid || applyForm.controls.email.invalid">
+            <p>For bot prevention we need to verify that you are a human. If the plugin does not load load please check your network connection.</p>
+            <re-captcha siteKey="6Lf-cIoUAAAAADab1Xs9wKFySYRVNqSUXXE4AFpU" formControlName="captcha"></re-captcha>
+        </div>
+        <br>
+        <button [disabled]="applyForm.invalid" *ngIf="!loading" mat-raised-button color="primary">
+      Submit
+    </button>
+        <button type="button" *ngIf="!loading" mat-button (click)="reset($event)" color="warn">
+      Cancel
+    </button>
+        <mat-progress-spinner *ngIf="loading" style="margin:0 auto; margin-top: 12px;" color="primary" diameter="30" strokeWidth="10" aria-label="submitloader" mode="indeterminate">
+        </mat-progress-spinner>
+        <p *ngIf="message" class="break-all">{{message}}</p>
+    </form>
+</mat-card>

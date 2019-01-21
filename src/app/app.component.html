@@ -2,48 +2,9 @@
   <img class="logo" alt="Metavserse Logo" src="/assets/logo.png">
   <h1>Free Testnet ETP</h1>
 </div>
-<p>Enter your testnet address and receive ETP for your tests: </p>
-<mat-card class="container">
-  <form [formGroup]="applyForm" (ngSubmit)="onSubmit()">
-    <mat-form-field class="example-full-width">
-      <input matInput formControlName="email" placeholder="Email" value="">
-    </mat-form-field>
-    <mat-error *ngIf="applyForm.controls.email.hasError('email')">
-      Please enter a valid email address
-    </mat-error>
-    <br>
-    <mat-form-field class="example-full-width">
-      <input matInput formControlName="address" placeholder="Testnet Address" value="">
-    </mat-form-field>
-    <mat-error *ngIf="applyForm.controls.address.hasError('pattern')">
-      Please enter a valid testnet address (starts with t)
-    </mat-error>
-    <br>
-    <div [hidden]="applyForm.controls.address.invalid || applyForm.controls.email.invalid">
-      <p>For bot prevention we need to verify that you are a human. If the plugin does not load load please check your network connection.</p>
-      <re-captcha siteKey="6Lf-cIoUAAAAADab1Xs9wKFySYRVNqSUXXE4AFpU" formControlName="captcha"></re-captcha>
-    </div>
-    <br>
-    <button [disabled]="applyForm.invalid" *ngIf="!loading" mat-raised-button color="primary">
-      Submit
-    </button>
-    <button type="button" *ngIf="!loading" mat-button (click)="reset($event)" color="warn">
-      Cancel
-    </button>
-    <mat-progress-spinner *ngIf="loading" style="margin:0 auto; margin-top: 12px;" color="primary" diameter="30"
-      strokeWidth="10" aria-label="submitloader" mode="indeterminate">
-    </mat-progress-spinner>
-    <p *ngIf="message" class="break-all">{{message}}</p>
-  </form>
-</mat-card>
+<request-form></request-form>
 <p>Please return the ETP to <span class="break-all">{{myAddress}}</span> if you dont need them anymore. Thank you.</p>
 <p>For information on how to use the testnet see <a href="https://docs.mvs.org/docs/testnet.html">docs.mvs.org</a> or
   <a href="https://medium.com/@canguruhh/how-to-use-the-metaverse-testnet-b8a194e6670d">this</a> Medium article.</p>
-<p *ngIf="balance">Available ETP: {{balance.available / 1E8}}</p>
-<h2>History</h2>
-<ul>
-  <li *ngFor="let item of history | async">
-    <b>{{item.date | date: 'medium'}}</b> Tx: <a class="break-all" href="https://explorer-testnet.mvs.org/tx/{{item.hash}}">{{item.hash}}</a>
-    - Address: <span class="break-all">{{item.address}}</span>
-  </li>
-</ul>
+<balance></balance>
+<history></history>

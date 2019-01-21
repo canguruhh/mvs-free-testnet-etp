@@ -11,10 +11,16 @@ import { AppComponent } from './app.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule, MatInputModule, MatCardModule, MatProgressSpinnerModule} from '@angular/material';
+import { BalanceComponent } from './balance/balance.component';
+import { HistoryComponent } from './history/history.component';
+import { RequestFormComponent } from './request-form/request-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    BalanceComponent,
+    HistoryComponent,
+    RequestFormComponent,
   ],
   imports: [
     BrowserModule,

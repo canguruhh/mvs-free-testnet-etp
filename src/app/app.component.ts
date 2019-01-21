@@ -1,23 +1,9 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
-import { Observable } from 'rxjs'
 import {environment} from '../environments/environment';
 
 
 interface SendResponse {
   hash: string
-}
-
-interface HistoryItem {
-  hash: string
-  address: string
-  date: Date
-}
-
-interface Balance {
-  available: number
 }
 
 @Component({
@@ -27,60 +13,9 @@ interface Balance {
 })
 export class AppComponent {
 
-  applyForm: FormGroup
-  message: string
-  balance: Balance
-  loading: boolean
   myAddress: string = environment.address
-  transferCollection: AngularFirestoreCollection<HistoryItem>;
-  history: Observable<HistoryItem[]>;
 
-  constructor(private http: HttpClient, afs: AngularFirestore) {
-    afs.firestore.settings({ timestampsInSnapshots: false });
-    this.transferCollection = afs.collection<HistoryItem>('transfer', ref => ref.orderBy('date', 'desc'));
-    this.history = this.transferCollection.valueChanges()
+  constructor(){
   }
 
-  ngOnInit() {
-    this.loadBalance()
-    this.applyForm = new FormGroup({
-      captcha: new FormControl(null, [
-        Validators.required
-      ]),
-      email: new FormControl(null, [
-        Validators.required,
-        Validators.email
-      ]),
-      address: new FormControl(null, [
-        Validators.required,
-        Validators.pattern(/^t[A-Za-z0-9]{33}$/)
-      ]),
-    });
-  }
-
-  loadBalance(){
-    this.http.get('/api/balance').subscribe((res:Balance) => {
-      this.balance = res
-    }, error => {
-      console.error(error)
-    })
-  }
-
-  reset(){
-      this.applyForm.reset()
-  }
-
-  onSubmit() {
-    this.loading=true
-    this.http.post('/api/send', this.applyForm.value).subscribe((res:SendResponse) => {
-      this.message = `We send you some testnet ETP with transaction ${res.hash}. Go change the world!`
-      console.log(res)
-      this.loading=false
-      this.reset()
-    }, res => {
-      console.error(res)
-      this.message = res.error
-      this.loading=false
-    })
-  }
 }

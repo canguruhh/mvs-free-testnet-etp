@@ -1,0 +1,14 @@
+<h2>History</h2>
+<div class="container">
+<div class="row" *ngFor="let item of history | async">
+    <div class="col-md-2">
+        <b>{{item.date | date: 'medium'}}</b>
+    </div>
+    <div class="col-md-6">
+       <a class="hash" href="https://explorer-testnet.mvs.org/tx/{{item.hash}}">{{item.hash}}</a>
+    </div>
+    <div class="col-md-4">
+       <span class="hash">{{item.address}}</span>
+    </div>
+</div>
+</div>
