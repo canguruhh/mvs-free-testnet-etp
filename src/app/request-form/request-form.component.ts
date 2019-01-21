@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+interface SendResponse {
+  hash: string
+}
+
 @Component({
   selector: 'request-form',
   templateUrl: './request-form.component.html',
