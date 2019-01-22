@@ -19,7 +19,7 @@ export class HistoryComponent implements OnInit {
   transferCollection: AngularFirestoreCollection<HistoryItem>;
 
   constructor(afs: AngularFirestore) {
-    afs.firestore.settings({ timestampsInSnapshots: false });
+    afs.firestore.settings({ timestampsInSnapshots: true });
     this.transferCollection = afs.collection<HistoryItem>('transfer', ref => ref.orderBy('date', 'desc'));
     this.history = this.transferCollection.valueChanges()
   }
